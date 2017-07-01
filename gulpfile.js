@@ -69,7 +69,7 @@ gulp.task('serve', ['build'], () => {
   browserSync.init({
     server: {
       baseDir: './',
-      index: 'indedx.html'
+      index: 'index.html'
     }
   });
   gulp.watch(['resource/js/*.js'], ['jsBuild']);
