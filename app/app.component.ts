@@ -7,7 +7,7 @@ import {Component} from '@angular/core';
     <h1>To Do List for {{month}}/{{day}}/{{year}}</h1>
     <h3>Current focus: {{currentFocus}}</h3>
     <ul>
-      <li *ngFor="let task of tasks">{{task.description}}</li>
+      <li *ngFor="let task of tasks" (click)='isDone(task)'>{{task.description}}  <button (click)='editTask()' class='btn btn-xs'>Edit</button></li>
     </ul>
   </div>
   `
@@ -24,6 +24,14 @@ export class AppComponent {
     new Task('Work on other things'),
     new Task('Stop working on things')
   ];
+
+  editTask() {
+    alert('edit success');
+  }
+
+  isDone(task) {
+    task.done ? alert('Task is complete') : alert('Task not yet completed');
+  }
 }
 
 export class Task {
