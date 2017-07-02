@@ -7,7 +7,7 @@ import {Component} from '@angular/core';
     <h1>To Do List for {{month}}/{{day}}/{{year}}</h1>
     <h3>Current focus: {{currentFocus}}</h3>
     <ul>
-      <li *ngFor="let task of tasks" (click)='isDone(task)'>{{task.description}}  <button (click)='editTask()' class='btn btn-xs'>Edit</button></li>
+      <li *ngFor="let task of tasks" (click)='isDone(task)' [class]='priorityColor(task)'>{{task.description}}  <button (click)='editTask()' class='btn btn-xs'>Edit</button></li>
     </ul>
   </div>
   `
@@ -20,9 +20,9 @@ export class AppComponent {
   day = this.today.getDate();
   year = this.today.getFullYear();
   tasks: Task[] = [
-    new Task('Finish angular homework'),
-    new Task('Work on other things'),
-    new Task('Stop working on things')
+    new Task('Finish angular homework', 2),
+    new Task('Work on other things', 1),
+    new Task('Stop working on things', 3)
   ];
 
   editTask() {
@@ -32,9 +32,19 @@ export class AppComponent {
   isDone(task) {
     task.done ? alert('Task is complete') : alert('Task not yet completed');
   }
+
+  priorityColor(task) {
+    if(task.priority === 3) {
+      return 'bg-danger';
+    } else if(task.priority === 2) {
+      return 'bg-warning';
+    } else if(task.priority === 1) {
+      return 'bg-info';
+    }
+  }
 }
 
 export class Task {
   public done: boolean = false;
-  constructor(public description: string) {}
+  constructor(public description: string, public priority: number) {}
 }
