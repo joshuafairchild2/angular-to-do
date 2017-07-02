@@ -19,7 +19,10 @@ export class AppComponent {
   month = this.today.getMonth() + 1;
   day = this.today.getDate();
   year = this.today.getFullYear();
-  firstTask = {
-    description: 'Finish angular work'
-  }
+  firstTask: Task = new Task('Finish angular homework');
+}
+
+export class Task {
+  public done: boolean = false;
+  constructor(public description: string) {}
 }
