@@ -7,8 +7,21 @@ import {Component} from '@angular/core';
     <h1>To Do List for {{month}}/{{day}}/{{year}}</h1>
     <h3>Current focus: {{currentFocus}}</h3>
     <ul>
-      <li *ngFor="let task of tasks" (click)='isDone(task)' [class]='priorityColor(task)'>{{task.description}}  <button (click)='editTask()' class='btn btn-xs'>Edit</button></li>
+      <li *ngFor="let task of tasks" [class]='priorityColor(task)'>{{task.description}}  <button (click)='editTask(task)' class='btn btn-xs'>Edit</button></li>
     </ul>
+    <hr>
+    <div>
+      <h3>{{selectedTask.description}}</h3>
+      <p>Task complete? {{selectedTask.done}}</p>
+      <h3>Edit Task</h3>
+      <label>Enter Task Description:</label>
+      <input [(ngModel)]="selectedTask.description">
+      <label>Enter Task Priority (1-3):</label>
+      <br>
+      <input type="radio" [(ngModel)]="selectedTask.priority" [value]="1">1 (Low Priority)<br>
+      <input type="radio" [(ngModel)]="selectedTask.priority" [value]="2">2 (Medium Priority)<br>
+      <input type="radio" [(ngModel)]="selectedTask.priority" [value]="3">3 (High Priority)
+    </div>
   </div>
   `
 })
@@ -24,9 +37,10 @@ export class AppComponent {
     new Task('Work on other things', 1),
     new Task('Stop working on things', 3)
   ];
+  selectedTask: Task = this.tasks[0];
 
-  editTask() {
-    alert('edit success');
+  editTask(clickedTask) {
+    this.selectedTask = clickedTask;
   }
 
   isDone(task) {
