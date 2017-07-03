@@ -10,7 +10,7 @@ import {Component} from '@angular/core';
       <li *ngFor="let task of tasks" [class]='priorityColor(task)'>{{task.description}}  <button (click)='editTask(task)' class='btn btn-xs'>Edit</button></li>
     </ul>
     <hr>
-    <div>
+    <div *ngIf='selectedTask'>
       <h3>{{selectedTask.description}}</h3>
       <p>Task complete? {{selectedTask.done}}</p>
       <h3>Edit Task</h3>
@@ -20,7 +20,8 @@ import {Component} from '@angular/core';
       <br>
       <input type="radio" [(ngModel)]="selectedTask.priority" [value]="1">1 (Low Priority)<br>
       <input type="radio" [(ngModel)]="selectedTask.priority" [value]="2">2 (Medium Priority)<br>
-      <input type="radio" [(ngModel)]="selectedTask.priority" [value]="3">3 (High Priority)
+      <input type="radio" [(ngModel)]="selectedTask.priority" [value]="3">3 (High Priority)<br>
+      <button (click)='finishEditing()'>Save changes</button>
     </div>
   </div>
   `
@@ -37,7 +38,7 @@ export class AppComponent {
     new Task('Work on other things', 1),
     new Task('Stop working on things', 3)
   ];
-  selectedTask: Task = this.tasks[0];
+  selectedTask = null;
 
   editTask(clickedTask) {
     this.selectedTask = clickedTask;
@@ -45,6 +46,10 @@ export class AppComponent {
 
   isDone(task) {
     task.done ? alert('Task is complete') : alert('Task not yet completed');
+  }
+
+  finishEditing() {
+    this.selectedTask = null;
   }
 
   priorityColor(task) {
@@ -60,5 +65,8 @@ export class AppComponent {
 
 export class Task {
   public done: boolean = false;
-  constructor(public description: string, public priority: number) {}
+  constructor(
+    public description: string,
+    public priority: number
+  ) {}
 }
